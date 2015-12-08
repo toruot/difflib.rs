@@ -784,3 +784,69 @@ pub fn unified_diff(path_a: String, path_b: String) {
 pub fn inner_diff(path_a: String, path_b: String) {
     print_some_diff(path_a, path_b, set_inner_diff);
 }
+
+// -----------------------------------------------------------------------------
+
+#[cfg(test)]
+use std::str::FromStr;
+
+#[test]
+fn check_result() {
+    let datas = vec![
+(vec!("aaa"),
+ vec!("aaa"),
+"",
+""),
+
+(vec!("aaa"),
+ vec!("aaA"),
+"\
+@@ -1 +1 @@
+-aaa
++aaA
+",
+"\
+@@ -1 +1 @@
+--|aaa
+ >|  ^
+++|aaA
+ >|  ^
+"),
+
+(vec!("abcdefg",
+      "あいうえおかきくけこ",
+      "いろはにほへと"),
+ vec!("abcdefg",
+      "あいうぇおかきくけコ",
+      "いろはにほへと"),
+"\
+@@ -1,3 +1,3 @@
+ abcdefg
+-あいうえおかきくけこ
++あいうぇおかきくけコ
+ いろはにほへと
+",
+"\
+@@ -1,3 +1,3 @@
+  |abcdefg
+--|あいうえおかきくけこ
+ >|      ^^          ^^
+++|あいうぇおかきくけコ
+ >|      ^^          ^^
+  |いろはにほへと
+"),
+    ];
+
+    for (a, b, u, i) in datas {
+        let du = String::from_str(u).unwrap();
+        let di = String::from_str(i).unwrap();
+
+        let mut ru = String::new();
+        let mut ri = String::new();
+        set_unified_diff(&a, &b, &mut ru);
+        set_inner_diff(  &a, &b, &mut ri);
+
+        assert_eq!(ru, du);
+        assert_eq!(ri, di);
+    }
+}
