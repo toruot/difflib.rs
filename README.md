@@ -2,11 +2,13 @@
 
 Pythonのdifflibを、Rustに移植。
 
+[![Build Status](https://travis-ci.org/toruot/difflib.rs.svg?branch=master)](https://travis-ci.org/toruot/difflib.rs)
+
 参考： https://docs.python.org/3/library/difflib.html (日本語訳: http://docs.python.jp/3.4/library/difflib.html )
 
 注：  
 不完全な移植、かつ、改変が入っているため、Pythonのdifflibと同じようには使えない。  
-テストコード無し。CI無し。ドキュメント無し。ベンチマーク無し。
+テストパターン少ない。ドキュメント無し。ベンチマーク無し。
 
 # Installation
 
